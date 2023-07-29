@@ -1,21 +1,21 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
+import java.io.*;
 import java.util.Scanner;
 
-import static java.lang.Integer.parseInt;
-
 public class gameStart {
-    public static int[] countLineAndColumn() throws FileNotFoundException {
-        Scanner in = new Scanner(new File("./GameStart.csv"));
+    public static int[] countLineAndColumn() throws IOException {
+        //Scanner in = new Scanner(new File("./GameStart.csv"));
+
+        BufferedReader in = new BufferedReader(new FileReader("./GameStart.csv"));
+
+        //BufferedReader in = new BufferedReader(new java.io.FileReader(new File("./GameStart.csv")));
 
         String linha;
         int line = 0;
         int words = 0;
 
-        while (in.hasNextLine()) {
-            linha = in.nextLine();
-            String[] itensDaLinha = linha.split(" ");
+        while ((linha = in.readLine()) != null) {
+
+            String[] itensDaLinha;
 
             line += 1;
 
@@ -78,17 +78,18 @@ public class gameStart {
     public static void menu() throws FileNotFoundException{
         Scanner input = new Scanner(System.in);
 
-        int option, password, optionMenu;
+        int option, optionMenu;
+        String password;
 
         do{
         System.out.println("Escolha uma opção: 1 - ADMIN | 2 -CLIENTE  | 3 -FINALIZAR PROGRAMA");
         option = input.nextInt();
         if(option ==1 ) {
             System.out.println("Digite a sua password ");
-           password = input.nextInt();
+           password = input.next();
 
 
-if(password == 123456789){
+    if(password.equals("123456789")){
     do{
         System.out.println("Menu: ");
         System.out.println("1. Imprimir ficheiro | 2. Vendas Totais | 3. Lucro | 4. Dados dos clientes | 5. Jogo mais caros e clientes que compraram 6.Sair ");
@@ -124,8 +125,8 @@ else{
     do{
         System.out.println("Password incorreta");
         System.out.println("Digite a sua password ");
-        password = input.nextInt();
-    } while (password != 123456789);
+        password = input.next();
+    } while (!password.equals("123456789"));
 }
 
 
@@ -160,9 +161,9 @@ else{
 
         }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        /*int[] resultLineColumn = countLineAndColumn();
-        createMatrix(resultLineColumn);*/
+    public static void main(String[] args) throws IOException {
+        int[] resultLineColumn = countLineAndColumn();
+        createMatrix(resultLineColumn);
         menu();
     }
     }
