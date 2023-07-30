@@ -115,7 +115,9 @@ public class gameStart {
         for (int i = 1; i < arrayLineColumn[0]; i++) {
             if (matrix[i][1] != null) {
                 if (matrix[i][1].equals(idClient)) {
+                    System.out.println("************************************CLIENTE*********************************");
                     System.out.println(" Nome do Cliente: " + matrix[i][2] + " \n Contato: " + matrix[i][3] + "  \n Email: " + matrix[i][4]);
+                    System.out.println("******************************************************************++*********");
                     return;
                 }
             }
@@ -138,7 +140,9 @@ public class gameStart {
                 }
             }
         }
+        System.out.println("***************JOGO MAIS CARO E CLIENTES QUE COMPRARAM***************");
         System.out.println("Jogo mais caro: " + expensiveGame + "\n Nome do Cliente: " + clientName);
+        System.out.println("*********************************************************************");
 
 
     }
@@ -157,6 +161,7 @@ public class gameStart {
             if (matrix[i][7] != null && hasName==false) { //não existe esse nome ainda no array de names
                 names[count] = matrix[i][7]; //depois que inclui o nome no array fazemos ++ para a proxima posição
                 count++;
+
                 System.out.println(matrix[i][7]);
 
             }
@@ -206,6 +211,12 @@ public class gameStart {
                 System.out.println("Digite a sua password ");
                 password = input.next();
 
+                while (!password.equals("123456789")){
+                    System.out.println("Password incorreta");
+                    System.out.println("Digite a sua password ");
+                    password = input.next();
+                }
+
                 if (password.equals("123456789")) {
                     do {
                         System.out.println("Menu: ");
@@ -219,12 +230,15 @@ public class gameStart {
                                 printMatrix(matrix, resultLineColumn);
                                 break;
                             case 2:
-
+                                System.out.println("***********************VENDAS TOTAIS***************************");
                                 System.out.println("Vendas Totais: \n " + calculateTotal(matrix, resultLineColumn));
+                                System.out.println("*********************************************************************");
 
                                 break;
                             case 3:
+                                System.out.println("***********************LUCRO*******************");
                                 System.out.println(" Lucro : \n " + profitGames(matrix, resultLineColumn));
+                                System.out.println("************************************************");
                                 break;
                             case 4:
                                 System.out.println("Dados do cliente: ");
@@ -243,12 +257,6 @@ public class gameStart {
                                 break;
                         }
                     } while (optionMenu != 6);
-                } else{
-                    do {
-                        System.out.println("Password incorreta");
-                        System.out.println("Digite a sua password ");
-                        password = input.next();
-                    } while (!password.equals("123456789"));
                 }
 
             } else if (option == 2) {
@@ -259,8 +267,9 @@ public class gameStart {
 
                     switch (optionMenu) {
                         case 1:
-                            System.out.println("Títulos de jogos: ");
+                            System.out.println("***************TITULO DO JOGO***************");
                             gameTitle(matrix, resultLineColumn);
+                            System.out.println("********************************************");
                             break;
                         case 2:
                             System.out.println(" Editora");
