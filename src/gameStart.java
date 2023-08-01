@@ -1,39 +1,49 @@
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
 
 public class gameStart {
     public static int[] countLineAndColumn() throws IOException {
-        //Scanner in = new Scanner(new File("./GameStart.csv"));
-
-        BufferedReader in = new BufferedReader(new java.io.FileReader("./GameStart.csv"));
-
-        //BufferedReader in = new BufferedReader(new java.io.FileReader(new File("./GameStart.csv")));
-
-        String linha;
         int line = 0;
         int words = 0;
 
-        while ((linha = in.readLine()) != null) {
+        BufferedReader objReader = null;
+        try {
+            String strCurrentLine;
 
-            String[] itensDaLinha;
+            objReader = new BufferedReader(new FileReader("./GameStart.csv"));
 
-            line += 1;
+            while ((strCurrentLine = objReader.readLine()) != null) {
+                String[] itensDaLinha;
 
-            itensDaLinha = linha.split(";");
-            words = itensDaLinha.length;
+                line += 1;
+
+                itensDaLinha = strCurrentLine.split(";");
+                words = itensDaLinha.length;
+            }
+
+
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            try {
+                if (objReader != null)
+                    objReader.close();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
-
-        in.close();
-
         int arrayLineColumn[] = new int[2];
         arrayLineColumn[0] = line;
         arrayLineColumn[1] = words;
 
         return arrayLineColumn;
-
     }
 
     public static String[][] createMatrix(int[] arrayLineColumn) throws FileNotFoundException {
@@ -92,15 +102,9 @@ public class gameStart {
         return total;
     }
 
-    public static double profitGames(String[][] matrix, int[] arrayLineColumn) throws FileNotFoundException {
-        double total = 0;
-        String game;
-
-        for (int i = 1; i < arrayLineColumn[0]; i++) {
-            if (matrix[i][8] != null) {
-                total += Double.parseDouble(matrix[i][8]) * 0.10;
-            }
-        }
+    public static double profitGames(double gain) throws FileNotFoundException {
+        double total =0;
+     total= (gain * 0.10);
 
         return total;
     }
@@ -168,30 +172,59 @@ public class gameStart {
             hasName=false; //tem que mudar para false para a proxima rodada do for
 
         }
-
-
-
     }
 
     public static void dataBookPublisher(String[][] matrix, int[] arrayLineColumn) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
 
+        String categories [] = new String[arrayLineColumn[0]];
         String bookPublisher;
+        boolean hasCategory=false;
+        int count =0;
+
         System.out.println("Digite o nome da editora que deseja pesquisar: ");
         bookPublisher = input.next();
 
+        //separar as categorias
         for (int i = 1; i < arrayLineColumn[0]; i++) {
+            for(int c=0; c< categories.length; c++){ //percorre o array de categorias salvas
+                if(categories[c] != null && categories[c].equals(matrix[i][6])){
+                   hasCategory=true;
+                }
+            }
+
+            if(matrix[i][6] != null && hasCategory==false){
+                categories[count] = matrix[i][6];
+                count++;
+                //System.out.println(matrix[i][6]);
+
+            }
+
+            hasCategory = false;
+
+
+
+        //criar um array para cada categoria e armazenar os jogos dentre dele - NÃO CONSEGUI
+       /* String categoryName [];
+        int countName =0;
+        for(int l=0; l< categories.length; l++){
+           categoryName= new String[]{categories[l]};
+            countName++;
+           if(categoryName.equals(l)){
+               categoryName =  matrix[i][7];
+           }
+            System.out.println(categories[l]);
+        }*/
+
             if (matrix[i][5] != null) {
                 if (matrix[i][5].equals(bookPublisher)) {
                     System.out.println(" *****" + matrix[i][5] + " *****" + " \n Categoria: " + matrix[i][6] + "  \n Jogos: " + matrix[i][7]);
                 }
             }
+
         }
 
-
     }
-
-
 
     public static void menu() throws IOException {
         Scanner input = new Scanner(System.in);
@@ -236,16 +269,16 @@ public class gameStart {
 
                                 break;
                             case 3:
+                                double gain = calculateTotal(matrix, resultLineColumn);
                                 System.out.println("***********************LUCRO*******************");
-                                System.out.println(" Lucro : \n " + profitGames(matrix, resultLineColumn));
+                                System.out.println(" Lucro : \n " + profitGames(gain));
                                 System.out.println("************************************************");
                                 break;
                             case 4:
-                                System.out.println("Dados do cliente: ");
+
                                 dataClient(matrix, resultLineColumn);
                                 break;
                             case 5:
-                                System.out.println("Jogo mais caro e clientes que compraram");
                                 moreExpensiveGame(matrix, resultLineColumn);
                                 break;
                             case 6:
