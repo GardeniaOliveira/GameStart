@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -19,7 +18,7 @@ public class gameStart {
 
                 line += 1;
 
-                itensDaLinha = strCurrentLine.split(";");
+                itensDaLinha = strCurrentLine.split(",");
                 words = itensDaLinha.length;
             }
 
@@ -65,7 +64,7 @@ public class gameStart {
 
         while (scannerFile.hasNextLine()) {
             linha = scannerFile.nextLine();
-            linhaDividida = linha.split(";");
+            linhaDividida = linha.split(",");
 
 
             for (int i = 0; i < linhaDividida.length; i++) {
@@ -134,19 +133,26 @@ public class gameStart {
 
         double expensiveGame = Double.parseDouble(matrix[1][8]);
         String clientName = "";
+        double game = 0;
 
         for (int i = 1; i < arrayLineColumn[0]; i++) {
             if (matrix[i][8] != null) {
                 if (Double.parseDouble(matrix[i][8]) > expensiveGame) {
                     expensiveGame = Double.parseDouble(matrix[i][8]);
-                    clientName = matrix[i][2];
-
                 }
+
             }
         }
-        System.out.println("***************JOGO MAIS CARO E CLIENTES QUE COMPRARAM***************");
-        System.out.println("Jogo mais caro: " + expensiveGame + "\n Nome do Cliente: " + clientName);
-        System.out.println("*********************************************************************");
+
+        for (int i = 1; i < arrayLineColumn[0]; i++) {
+            if (Double.parseDouble(matrix[i][8]) == expensiveGame) {
+                clientName = matrix[i][2];
+                System.out.println( "Nome do Cliente: " + clientName);
+            }
+        }
+
+        System.out.println("Jogo mais caro: " + expensiveGame );
+
 
 
     }
@@ -253,7 +259,7 @@ public class gameStart {
                 if (password.equals("123456789")) {
                     do {
                         System.out.println("Menu: ");
-                        System.out.println("1. Imprimir ficheiro \n 2. Vendas Totais  \n 3. Lucro  \n 4. Dados do cliente \n 5. Jogo mais caros e clientes que compraram \n6.Sair ");
+                        System.out.println("1. Imprimir ficheiro \n 2. Vendas Totais  \n 3. Lucro  \n 4. Dados do cliente \n 5. Jogo mais caros e clientes que compraram \n6.Voltar ao menu anterior ");
                         optionMenu = input.nextInt();
 
 
@@ -279,10 +285,11 @@ public class gameStart {
                                 dataClient(matrix, resultLineColumn);
                                 break;
                             case 5:
+                                System.out.println("***************JOGO MAIS CARO E CLIENTES QUE COMPRARAM***************");
                                 moreExpensiveGame(matrix, resultLineColumn);
-                                break;
+                                System.out.println("*********************************************************************");
                             case 6:
-                                System.out.println("sair");
+                                System.out.println("Voltar ao menu anterior");
 
                                 break;
                             default:
@@ -295,7 +302,7 @@ public class gameStart {
             } else if (option == 2) {
                 do {
                     System.out.println("Menu: ");
-                    System.out.println("1. Títulos de jogos \n 2. Editora \n 3.Sair");
+                    System.out.println("1. Títulos de jogos \n 2. Editora \n 3.Voltar ao menu anterior");
                     optionMenu = input.nextInt();
 
                     switch (optionMenu) {
@@ -309,7 +316,7 @@ public class gameStart {
                             dataBookPublisher(matrix, resultLineColumn);
                             break;
                         case 3:
-                            System.out.println("Sair");
+                            System.out.println("Voltar ao menu anterior");
                             break;
                         default:
                             System.out.println("opção inválida");
