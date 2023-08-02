@@ -92,6 +92,7 @@ public class gameStart {
     public static double calculateTotal(String[][] matrix, int[] arrayLineColumn) throws FileNotFoundException {
         double total = 0;
 
+
         for (int i = 1; i < arrayLineColumn[0]; i++) {
             if (matrix[i][8] != null) {
                 total += Double.parseDouble(matrix[i][8]);
@@ -270,7 +271,7 @@ public class gameStart {
                                 break;
                             case 2:
                                 System.out.println("***********************VENDAS TOTAIS***************************");
-                                System.out.println("Vendas Totais: \n " + calculateTotal(matrix, resultLineColumn));
+                                System.out.println("Quantidade de vendas:" + (resultLineColumn[0] -1 )+"\n " +  "Vendas Totais: \n " + calculateTotal(matrix, resultLineColumn));
                                 System.out.println("*********************************************************************");
 
                                 break;
